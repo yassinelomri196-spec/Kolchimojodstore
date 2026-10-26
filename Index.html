@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Kolchi Mojod Store | كلشي موجود</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6FAF8;--surface:#fff;--ink:#14201D;--muted:#5B6B66;--green:#0E5A4A;--green-ink:#fff;--gold:#F4B400;--tint:#DCEFE8;--line:#D5E3DD;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0D1816;--surface:#142421;--ink:#EAF3F0;--muted:#9DB3AC;--green:#2FA68B;--green-ink:#06231C;--tint:#1B3a33;--line:#264640}}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+.wrap{max-width:1000px;margin:0 auto;padding:0 16px}
+header{display:flex;align-items:center;justify-content:space-between;padding:14px 0}
+.logo{font-weight:900;font-size:1.15rem}
+.logo span{background:var(--gold);color:#14201D;padding:0 8px;border-radius:6px;margin-inline-end:6px}
+button{font:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.cartbtn{background:var(--green);color:var(--green-ink);border:0;border-radius:99px;padding:6px 16px;font-weight:700}
+.hero{padding:36px 0 28px}
+.hero h1{font-size:clamp(3.2rem,16vw,6.5rem);line-height:1;margin:0;font-weight:900;color:var(--green)}
+.hero h1 em{font-style:normal;display:inline-block;background:var(--gold);color:#14201D;padding:0 14px;border-radius:12px;transform:rotate(-2deg)}
+.hero p{max-width:34rem;color:var(--muted);font-size:1.1rem;margin:16px 0 0}
+.perks{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px}
+.perks b{background:var(--tint);border-radius:99px;padding:2px 14px;font-size:.9rem;font-weight:600}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:8px 0 16px}
+.tabs button{flex:none;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:99px;padding:4px 18px;font-weight:600}
+.tabs button[aria-pressed="true"]{background:var(--green);color:var(--green-ink);border-color:var(--green)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;padding-bottom:40px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.pic{aspect-ratio:1;display:grid;place-items:center;font-size:3.4rem;background:var(--tint)}
+.info{padding:10px 12px 12px;display:flex;flex-direction:column;gap:2px;flex:1}
+.info h3{margin:0;font-size:1rem}
+.info small{color:var(--muted)}
+.price{font-weight:800;color:var(--green);font-size:1.1rem;margin-top:auto}
+.add{margin-top:8px;background:var(--gold);color:#14201D;border:0;border-radius:10px;padding:6px;font-weight:700}
+footer{border-top:1px solid var(--line);padding:22px 0;color:var(--muted);text-align:center;font-size:.9rem}
+#drawer{position:fixed;inset:0;display:none;background:rgba(0,0,0,.5);z-index:20}
+#drawer.open{display:flex;justify-content:flex-start}
+.panel{background:var(--surface);width:min(420px,100%);height:100%;overflow-y:auto;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(16px + env(safe-area-inset-bottom,0px))}
+.panel h2{margin:0 0 8px}
+.row{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid var(--line)}
+.row .n{flex:1}
+.qty button{width:28px;height:28px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+.total{display:flex;justify-content:space-between;font-weight:800;font-size:1.1rem;padding:12px 0}
+.panel input{width:100%;padding:8px 12px;margin-bottom:8px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--ink);font:inherit}
+.send{width:100%;background:#1FA855;color:#fff;border:0;border-radius:12px;padding:10px;font-weight:800;font-size:1.05rem}
+.close{float:left;background:none;border:0;color:var(--ink);font-size:1.6rem}
+.empty{color:var(--muted);padding:20px 0}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <div class="logo"><span>Kolchi</span>Mojod Store</div>
+ <button class="cartbtn" id="open">السلة (<span id="cnt">0</span>)</button>
+</header>
+
+<section class="hero">
+ <h1>كلشي <em>موجود</em></h1>
+ <p>منتجات متنوعة في مكان واحد، تطلبها من هاتفك وتدفع عند الاستلام.</p>
+ <div class="perks"><b>الدفع عند الاستلام</b><b>التوصيل لجميع مدن المغرب</b><b>الطلب عبر واتساب</b></div>
+</section>
+
+<nav class="tabs" id="tabs" aria-label="الأقسام"></nav>
+<main class="grid" id="grid"></main>
+<footer>© Kolchi Mojod Store، جميع الحقوق محفوظة</footer>
+</div>
+
+<div id="drawer" role="dialog" aria-modal="true" aria-label="سلة الطلبات">
+ <div class="panel">
+  <button class="close" id="close" aria-label="إغلاق">×</button>
+  <h2>سلة الطلبات</h2>
+  <div id="items"></div>
+  <div class="total"><span>المجموع</span><span id="total">0 د.م</span></div>
+  <input id="name" placeholder="الاسم الكامل" autocomplete="name">
+  <input id="phone" placeholder="رقم الهاتف" inputmode="tel" autocomplete="tel">
+  <input id="city" placeholder="المدينة والعنوان" autocomplete="street-address">
+  <button class="send" id="send">إرسال الطلب عبر واتساب</button>
+</div>
+</div>
+
+<script>
+‎// رقم واتساب لاستقبال الطلبات (بصيغة دولية بدون +)
+const WHATSAPP = "212718517703";
+const CATS = ["الكل","ملابس","إلكترونيات","المنزل","العناية"];
+const PRODUCTS = [
+ {id:1,n:"قميص قطني",c:"ملابس",p:120,e:"👕"},
+ {id:2,n:"حذاء رياضي",c:"ملابس",p:250,e:"👟"},
+ {id:3,n:"سماعات بلوتوث",c:"إلكترونيات",p:180,e:"🎧"},
+ {id:4,n:"ساعة ذكية",c:"إلكترونيات",p:320,e:"⌚"},
+ {id:5,n:"مصباح LED للمكتب",c:"المنزل",p:90,e:"💡"},
+ {id:6,n:"طقم أكواب",c:"المنزل",p:110,e:"☕"},
+ {id:7,n:"عطر رجالي",c:"العناية",p:200,e:"🧴"},
+ {id:8,n:"حقيبة ظهر",c:"ملابس",p:160,e:"🎒"}
+];
+let cat="الكل", cart={};
+const $=s=>document.querySelector(s);
+const money=v=>v.toLocaleString("ar-MA")+" د.م";
+
+function renderTabs(){
+ $("#tabs").innerHTML=CATS.map(c=>`<button aria-pressed="${c===cat}" data-c="${c}">${c}</button>`).join("");
+}
+function renderGrid(){
+ $("#grid").innerHTML=PRODUCTS.filter(p=>cat==="الكل"||p.c===cat).map(p=>`
+ <article class="card"><div class="pic" aria-hidden="true">${p.e}</div>
+ <div class="info"><h3>${p.n}</h3><small>${p.c}</small><div class="price">${money(p.p)}</div>
+ <button class="add" data-id="${p.id}">أضف إلى السلة</button></div></article>`).join("");
+}
+function renderCart(){
+ const ids=Object.keys(cart);
+ let total=0,count=0;
+ $("#items").innerHTML=ids.length?ids.map(id=>{
+  const p=PRODUCTS.find(x=>x.id==id),q=cart[id];total+=p.p*q;count+=q;
+  return `<div class="row"><span>${p.e}</span><span class="n">${p.n}<br><small>${money(p.p)}</small></span>
+  <span class="qty"><button data-d="-1" data-id="${id}" aria-label="إنقاص">−</button> ${q} <button data-d="1" data-id="${id}" aria-label="زيادة">+</button></span></div>`;
+ }).join(""):'<div class="empty">السلة فارغة. أضف منتجاً للبدء.</div>';
+ $("#total").textContent=money(total);
+ $("#cnt").textContent=count;
+}
+$("#tabs").onclick=e=>{const b=e.target.closest("button");if(!b)return;cat=b.dataset.c;renderTabs();renderGrid()};
+$("#grid").onclick=e=>{const b=e.target.closest(".add");if(!b)return;cart[b.dataset.id]=(cart[b.dataset.id]||0)+1;renderCart();b.textContent="تمت الإضافة";setTimeout(()=>b.textContent="أضف إلى السلة",900)};
+$("#items").onclick=e=>{const b=e.target.closest("[data-d]");if(!b)return;const id=b.dataset.id;cart[id]+=+b.dataset.d;if(cart[id]<=0)delete cart[id];renderCart()};
+$("#open").onclick=()=>$("#drawer").classList.add("open");
+$("#close").onclick=()=>$("#drawer").classList.remove("open");
+$("#drawer").onclick=e=>{if(e.target.id==="drawer")$("#drawer").classList.remove("open")};
+$("#send").onclick=()=>{
+ const ids=Object.keys(cart);
+ if(!ids.length){alert("أضف منتجاً إلى السلة أولاً");return}
+ const name=$("#name").value.trim(),phone=$("#phone").value.trim(),city=$("#city").value.trim();
+ if(!name||!phone||!city){alert("املأ الاسم والهاتف والعنوان");return}
+ let t=0;
+ const lines=ids.map(id=>{const p=PRODUCTS.find(x=>x.id==id);t+=p.p*cart[id];return `- ${p.n} × ${cart[id]} = ${p.p*cart[id]} د.م`});
+ const msg=`طلب جديد من Kolchi Mojod Store\n${lines.join("\n")}\nالمجموع: ${t} د.م\nالاسم: ${name}\nالهاتف: ${phone}\nالعنوان: ${city}\nالدفع عند الاستلام`;
+ window.open(`https://wa.me/${WHATSAPP}?text=${encodeURIComponent(msg)}`,"_blank");
+};
+renderTabs();renderGrid();renderCart();
+</script>
+</body>
+</html>
